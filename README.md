@@ -13,6 +13,15 @@ INTRODUCTION
 Electric vehicle charging is constantly changing and is pushing for faster battery charging rates requiring typically less than 30 minutes spent at a charging station for one full charge of an electric vehicle. The DC charging station is typically a Level 3 charger which can cater to a very high-power level between 120–240 kW. These DC charging stations are standalone units that house AC/DC and DC/DC power conversion stages. A number of power conversion modules are stacked together inside a charging station to increase the power levels and enable fast charging. DC fast-charging stations provide a high-power DC current to an electric vehicle’s battery without passing through any onboard AC/DC converter, which means the current is connected directly to the battery.
 
  Most cars on the road today can handle only up to 50 kW. Newer cars will have the ability to charge at greater rates of power. As EVs come with a higher range and batteries get bigger, DC charging solutions are being developed to support long-range EV batteries through fast charging stations up to 250 kW or more. The DC/DC converter in a charging station must be capable of interfacing with the rectified bus voltage (700-800 V) from a three-phase rectifier at its input and connect with the battery of an electric vehicle at its output, delivering rated power. The DC/DC converter finds important applications in a number of end equipment.
+ 
+ 
+ 
+
+
+ 
+Fig EV Charging station
+
+
 
 
 
@@ -22,8 +31,8 @@ This design provides an overview of the implementation of a single-phase Dual Ac
 
 Power density and system efficiency are two important requirements of a converter in a DC charging station. Operating at high switching frequencies enables the reduced size of magnetics. By moving to higher bus voltage to facilitate fast charging, more power can be transferred at the same current level. This helps to reduce the amount of copper, thereby improving the power density of the converter. The converter must also be highly efficient as it results in significant cost savings and reduced thermal solution.
 
-
-
+![image](https://user-images.githubusercontent.com/85508275/203494995-dea3e1b7-c0b1-445a-b61e-7a7c7adc6b52.png)
+GaN based 1-MHz Dual Active  Bridge Converter
 
 
 MATERIALS AND METHODS
@@ -31,15 +40,16 @@ MATERIALS AND METHODS
 We are using Simulink to simulate and demonstrate this project. 
 
 We have a DC source and we are converting it into AC using an inverter. This AC voltage is increased or decreased using a transformer and it is given to the rectifier section. Consequently, AC is converted to DC and a capacitor is used to filter out the DC.
- 2.1 Transformer:
+Transformer:
 
 The transformer provides isolation between the input and output sides if there is any damage concerning the load consequently it does not affect the source terminals. Also based on the transformer's turn ratio we can step up or down the voltage.
 
 
-2.2 Mosfets and Thyristors:
+Mosfets and Thyristors:
 
 Due to the total of eight switching elements in this topology, the number of different control methods is very high and there are several degrees of freedom that can be used for optimization. The two bridge branches of a full bridge have a phase shift of 180°. Only the phase shift φ between the primary and secondary full bridge is used to control the power flow. 
-
+![image](https://user-images.githubusercontent.com/85508275/203495059-e32e969c-07d0-40c4-9978-a2178d5e74fa.png)
+Switich operations
 
 Each switch is on for 50% of its respective switching period. The switch pairs in the two bridges all have the same switching period but are operated such that between each bridge a phase shift is introduced that varies based on the modulation derived from feedback measurements.
 The efficiency achievable with the DAB topology lies between 96% and 99% and is primarily determined by the nominal input and output voltage as well as by the switching frequency. A further influencing factor is the desired range of the input and output voltage. This is due to the fact that at low voltages and high powers the ohmic losses represent the dominant loss component and scale these quadratically with the RMS current. In addition, when phase shift control is used in combination with a wide voltage range, there are inevitably working ranges in which an increased reactive current component is created in the transformer resulting in higher losses in the transformer winding. The other loss components in the DAB are given by the switching losses in the semiconductor switches, and the core losses in the transformer. The switching losses of the power semiconductors represent a not negligible proportion of the total losses. In order to select suitable semiconductor switches, the operating conditions in the circuit must first be analyzed. These include the maximum RMS current through the respective switches, the maximum reverse voltage, and the switching currents when the semiconductors are switched on and off. The operating frequency of the converter is also an important criterion.
@@ -55,15 +65,16 @@ Placing Mosfets and switching them accordingly can convert the DC voltage source
 
 
 
-2.3 Rectifier :
+Rectifier :
+![image](https://user-images.githubusercontent.com/85508275/203495145-fada0871-78d3-4e27-ac36-62b0808820b7.png)
+Full bridge rectifier
 
 Rectification converts an oscillating sinusoidal AC voltage source into a constant current DC voltage supply by means of diodes, thyristors, transistors, or converters. This rectifying process can take on many forms with half-wave, full-wave, uncontrolled and fully-controlled rectifiers transforming a single-phase or three-phase supply into a constant DC level.
 We can use SCRs or other thyristors and convert the modified output from the transformer to DC voltage. The thyristors act as full wave rectifier and provide controlled DC output voltage.  It is popularly used in grid-to-grid vehicle applications where it is used as a battery charging section and in case an AC supply is required, we can directly take the tapping from the inverter section. It can provide multiple opportunities to use the nature of supply (Both DC and AC)
  
-2.2  full bridge rectifier
 
 
-2.4 Inverter :
+ Inverter :
 
 The inverter is an electrical device that converts DC input supply to symmetric AC voltage of standard magnitude and frequency at the output side. It is also named as DC to AC converter. An ideal inverter input and output can be represented either in a sinusoidal and non-sinusoidal waveforms. If the input source to the inverter is a voltage source, then the inverter is said to be called a voltage source inverter (VSI) and if the input source to the inverter is a current source then it is called as current source inverter (CSI).
 
@@ -83,6 +94,12 @@ The capacitor acts as a filter in this circuit. The capacitor increases the DC v
 
 
 
+![image](https://user-images.githubusercontent.com/85508275/203495235-26716270-870e-4a5f-b92d-6fd815cd6a3d.png)
+3.2 circuit of the DAB
+
+
+
+
 
 
 
@@ -91,20 +108,16 @@ The capacitor acts as a filter in this circuit. The capacitor increases the DC v
 
 
 
-RESULTS AND DISCUSSION
 
-Present results; evaluate the proposed approaches and discuss the findings. Make sure you explain how results were obtained and what they mean. About 3-4 pages with ap- propriate subdivisions
-•	Relevant figures/ block diagrams/ plots
 
-•	Justification on the parameter selection of each block
 
-•	Inferences made
 
 
 3.4	Phase modulation : 
 Phase-shift modulation is probably the simplest modulation technique for dual active bridge converters. It uses D1=D2=0.5 (i.e. 2-level switched voltages), reducing the degrees of freedom to ϕ only.
 The switched voltage and inductor current waveforms are depicted below:
- 
+ ![image](https://user-images.githubusercontent.com/85508275/203495380-fc85fe76-db64-492b-a66b-ad467d2de468.png)
+
 3.4 phase modulation waveforms
 Dual Active Bridge switched voltage and inductor current waveforms
 With this method, the power transfer between the primary and secondary has the following simple expression and has a maximum for ϕ=0.25.
